@@ -1,0 +1,79 @@
+<div class="addItem">
+    <div class="list">
+        <h1>Older item not done yet</h1>
+        <div *ngFor="let item of olderItem;">
+
+            <mat-card-title-group>
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>{{item.author}}</mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-card-content>
+                {{item.time}} - status {{item.status}}
+            </mat-card-content>
+
+        </div>
+    </div>
+</div>
+<div>
+    <form #newItemForm="ngForm" (ngSubmit)="onSubmit(newItemForm)">
+        <mat-form-field>
+            <input matInput name="newItem" ngModel type="text" placeholder="Enter a new item">
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="accent">Add Item</button>
+    </form>
+</div>
+
+<mat-grid-list cols="3">
+    <mat-grid-tile>
+        <mat-grid-tile-header>To Do</mat-grid-tile-header>
+        <div class="drag-container">
+            <div class="list" cdkDropList #pendingList="cdkDropList" [cdkDropListData]="itemsTypeTodo"
+                [cdkDropListConnectedTo]="[doneList, reviewList]" class="item-list" (cdkDropListDropped)="drop($event)">
+                <mat-card class="list-item" *ngFor="let item of itemsTypeTodo; let index" cdkDrag>
+                    <mat-card-title-group>
+                        <mat-card-title>{{item.name}}</mat-card-title>
+                        <mat-card-subtitle>{{item.author}}</mat-card-subtitle>
+                    </mat-card-title-group>
+                    <mat-card-content>
+                        {{item.time}} - status {{item.status}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-grid-tile>
+    
+    <mat-grid-tile>
+        <mat-grid-tile-header>In Progress</mat-grid-tile-header>
+        <div cdkDropList #reviewList="cdkDropList" [cdkDropListData]="itemsTypeInProgress"
+            [cdkDropListConnectedTo]="[doneList, pendingList]" class="item-list" (cdkDropListDropped)="drop($event)">
+            <mat-card class="list-item" *ngFor="let item of itemsTypeInProgress; let index;" cdkDrag>
+                <mat-card-title-group>
+                    <mat-card-title>{{item.name}}</mat-card-title>
+                    <mat-card-subtitle>{{item.author}}</mat-card-subtitle>
+                </mat-card-title-group>
+                <mat-card-content>
+                    {{item.time}} - status {{item.status}}
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <div class="drag-container">
+            <mat-grid-tile-header>Done</mat-grid-tile-header>
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="itemsTypeDone"
+                [cdkDropListConnectedTo]="[pendingList, reviewList]" class="item-list"
+                (cdkDropListDropped)="drop($event)">
+                <mat-card class="list-item" *ngFor="let item of itemsTypeDone let index;" cdkDrag>
+                    <mat-card-title-group>
+                        <mat-card-title>{{item.name}}</mat-card-title>
+                        <mat-card-subtitle>{{item.author}}</mat-card-subtitle>
+                    </mat-card-title-group>
+                    <mat-card-content>
+                        {{item.time}} - status {{item.status}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
