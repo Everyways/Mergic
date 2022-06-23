@@ -1,6 +1,6 @@
-import { UserStory } from '../interfaces/UserStory.interface';
+import { IUserStory } from '../interfaces/IUserStory.interface';
 
-export class NewUserStory implements UserStory {
+export class NewUserStory implements IUserStory {
     name = "";
     id = "";
     time = new Date();
