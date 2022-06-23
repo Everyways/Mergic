@@ -1,0 +1,16 @@
+pull_request_rules:
+  - name: add typescript label if a typescript file is modified
+    conditions:
+      - files~=\.ts$
+    actions:
+      label:
+        add:
+          - typescript
+
+  - name: automatic merge on approval when the title does not contain “WIP” (ignoring case)
+    conditions:
+      - "#approved-reviews-by>=1"
+      - -title~=(?i)wip
+    actions:
+      merge:
+        method: merge
