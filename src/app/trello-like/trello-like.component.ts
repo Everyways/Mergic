@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { NgForm } from '@angular/forms';
 
-import { UserStory } from '../interfaces/UserStory.interface';
-import { NewUserStory } from '../class/NewUserStory.class'
+import { IMergicApp } from '../interfaces/IMergicApp.interface';
+import { IUserStory } from '../interfaces/IUserStory.interface';
+import { NewUserStory } from '../class/NewUserStory.class';
+import { MergicService } from '../services/Mergic.service';
+
 import * as data from 'src/assets/data/MRs.json';
 
 
@@ -14,16 +17,73 @@ import * as data from 'src/assets/data/MRs.json';
 })
 
 export class TrelloLikeComponent implements OnInit {
-  itemsTypeTodo: UserStory[] = [];
-  itemsTypeInProgress: UserStory[] = [];
-  itemsTypeDone: UserStory[] = [];
-  items: UserStory[] = [];
+  appInfo: any;
+  itemsTypeTodo: IUserStory[] = [];
+  itemsTypeInProgress: IUserStory[] = [];
+  itemsTypeDone: IUserStory[] = [];
+  items: IUserStory[] = [];
   newUserStory: NewUserStory;
-  olderItem: UserStory[] = [];
+  olderItem: IUserStory[] = [];
   importedData: any = (data as any).default;
+  currentQueue: any;
+  appData: any;
+  appQueue: any;
+  appQueueConf: any;
+  loading: boolean = false;
+  errorMessage: any;
 
-  constructor() {
+  constructor(private mergicService: MergicService) {
+
+    this.getMergicAppInfo();
+    this.getMergicQueue();
+    this.getMergicQueueConfig();
     this.newUserStory = new NewUserStory();
+  }
+
+  getMergicAppInfo() {
+    this.loading = true;
+    this.errorMessage = "";
+    this.mergicService.getAppInfos().subscribe((response) => {
+      console.log('response received')
+      this.appData = response;
+    },
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+        this.loading = false;
+      },
+      () => {
+        console.error('Request completed');
+        this.loading = false;
+      });
+  }
+
+  getMergicQueue() {
+    this.mergicService.getQueue().subscribe((responseQ) => {
+      console.log('responseQ received', responseQ);
+      this.appQueue = responseQ;
+    },
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+      },
+      () => {
+        console.error('Request completed');
+      });
+  }
+
+  getMergicQueueConfig() {
+    this.mergicService.getQueueConfig().subscribe((responseQC) => {
+      console.log('responseQC received', responseQC);
+      this.appQueueConf = responseQC;
+    },
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+      },
+      () => {
+        console.error('Request completed');
+      });
   }
 
   ngOnInit(): void {
@@ -57,7 +117,7 @@ export class TrelloLikeComponent implements OnInit {
     return this.itemsTypeTodo.length + this.itemsTypeInProgress.length + this.itemsTypeDone.length;
   }
 
-  drop(event: CdkDragDrop<UserStory[]>) {
+  drop(event: CdkDragDrop<IUserStory[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,

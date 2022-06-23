@@ -1,4 +1,4 @@
-export interface UserStory {
+export interface IUserStory {
     name: string,
     id: string,
     time: Date,

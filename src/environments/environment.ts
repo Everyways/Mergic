@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  github_owner: "Everyways",
+  github_repo: "Mergic",
+  MERGIFY_API_KEY: "mka_Jey5MnrknGRk9PhnCon9rzAp9cvjxtzvQux_ljVUiXJ8-XHsxhAwSBCdjtnEn7bY0GWuplY"
 };
 
 /*
