@@ -1,6 +1,10 @@
 <div class="addItem">
     <div class="list">
-        <h1>Older item not done yet</h1>
+        <div *ngIf="loading">loading...</div>
+        <div *ngIf="errorMessage" class="alert alert-warning">
+            <strong>Warning!</strong> {{errorMessage | json}}
+          </div>
+        <h1 *ngIf="!loading">Older item not done yet from <strong>{{appData.name}}</strong> <i>({{appData.id}})</i></h1>
         <div *ngFor="let item of olderItem;">
 
             <mat-card-title-group>
