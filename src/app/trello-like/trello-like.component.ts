@@ -28,6 +28,7 @@ export class TrelloLikeComponent implements OnInit {
   currentQueue: any;
   appData: any;
   appQueue: any;
+  appQueueConf: any;
   loading: boolean = false;
   errorMessage: any;
 
@@ -35,7 +36,7 @@ export class TrelloLikeComponent implements OnInit {
 
     this.getMergicAppInfo();
     this.getMergicQueue();
-    console.log(this.appData, this.appQueue);
+    this.getMergicQueueConfig();
     this.newUserStory = new NewUserStory();
   }
 
@@ -44,17 +45,17 @@ export class TrelloLikeComponent implements OnInit {
     this.errorMessage = "";
     this.mergicService.getAppInfos().subscribe((response) => {
       console.log('response received')
-      this.appData = response; 
+      this.appData = response;
     },
-    (error) => {
-      console.error('Request failed with error');
-      this.errorMessage = error;
-      this.loading = false;
-    },
-    () => {
-      console.error('Request completed');
-      this.loading = false; 
-    });
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+        this.loading = false;
+      },
+      () => {
+        console.error('Request completed');
+        this.loading = false;
+      });
   }
 
   getMergicQueue() {
@@ -62,13 +63,27 @@ export class TrelloLikeComponent implements OnInit {
       console.log('responseQ received', responseQ);
       this.appQueue = responseQ;
     },
-    (error) => {
-      console.error('Request failed with error');
-      this.errorMessage = error;
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+      },
+      () => {
+        console.error('Request completed');
+      });
+  }
+
+  getMergicQueueConfig() {
+    this.mergicService.getQueueConfig().subscribe((responseQC) => {
+      console.log('responseQC received', responseQC);
+      this.appQueueConf = responseQC;
     },
-    () => {
-      console.error('Request completed');
-    });
+      (error: any) => {
+        console.error('Request failed with error');
+        this.errorMessage = error;
+      },
+      () => {
+        console.error('Request completed');
+      });
   }
 
   ngOnInit(): void {
