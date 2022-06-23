@@ -3,7 +3,6 @@ queue_rules:
     speculative_checks: 2
     conditions: []
 
-
 pull_request_rules:
   - name: add typescript label if a typescript file is modified
     conditions:

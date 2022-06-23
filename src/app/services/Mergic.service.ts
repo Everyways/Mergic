@@ -10,6 +10,7 @@ export class MergicService {
     appInfos: IMergicApp[] = [];
     apiKey: string = '';
     urlQueues: string = '';
+    urlQConfig: string = '';
     owner: string = '';
     repository: string = '';
     baseUrl: string = 'https://api.mergify.com/v1';
@@ -28,9 +29,15 @@ export class MergicService {
         return this.http.get<IMergicApp>(this.baseUrl + '/application', this.httpOptions);
     }
 
-    getQueue() {
+    getQueue(): Observable<any> {
         this.urlQueues = `${this.baseUrl}/repos/${env.github_owner}/${env.github_repo}/queues`;
 
         return this.http.get<IMergicApp>(this.urlQueues, this.httpOptions);
+    }
+
+    getQueueConfig(): Observable<any> {
+        this.urlQConfig = `${this.baseUrl}/repos/${env.github_owner}/${env.github_repo}/queues/configuration`;
+
+        return this.http.get<IMergicApp>(this.urlQConfig, this.httpOptions);
     }
 }
