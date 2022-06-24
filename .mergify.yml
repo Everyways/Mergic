@@ -13,3 +13,12 @@ pull_request_rules:
     actions:
       merge:
         method: merge
+        
+  - name: mergue using the merge queue
+    conditions:
+      - base=master
+      - "#files>=1"
+      - label!=urgent
+    actions:
+      queue:
+        name: default
