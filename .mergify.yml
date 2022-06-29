@@ -8,14 +8,24 @@ queue_rules:
     conditions: []
 
 pull_request_rules:
+  - name: Generic rule
+    conditions:
+      - -title~=(?i)wip
+    actions:
+      queue:
+        name: default
+        
   - name: automatic merge on approval when the title does not contain “WIP” (ignoring case)
     conditions:
             - "#approved-reviews-by>=1"
             - -title~=(?i)wip
             - "files=1"
     actions:
-      merge:
-        method: merge
+      comment:
+        message: "@{{author}} this pull request is waiting for approuval"
+      label:
+        add:
+          - "To do"
         
   - name: mergue using the merge queue
     conditions:
