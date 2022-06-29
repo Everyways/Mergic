@@ -1,24 +1,12 @@
 queue_rules:
   - name: default
-    conditions: []
+    conditions: ["files>=1"]
 
 pull_request_rules:
-  - name: automatic merge on approval when the title does not contain “WIP” (ignoring case)
+  - name: Generic rule not in wip
     conditions:
-        - and:
-            - "#approved-reviews-by>=1"
-            - or:
-              - -title~=(?i)wip
-              - "files=1"
-    actions:
-      merge:
-        method: merge
-        
-  - name: mergue using the merge queue
-    conditions:
-      - base=master
-      - "#files>=1"
-      - label!=urgent
+      - -title~=(?i)wip
+      - "#approved-reviews-by>=1"
     actions:
       queue:
         name: default
