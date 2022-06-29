@@ -19,6 +19,7 @@ pull_request_rules:
         
   - name: mergue using the merge queue
     conditions:
+      - "#approved-reviews-by>=1"
       - base=master
       - "#files>=1"
       - label!=urgent
@@ -49,6 +50,7 @@ pull_request_rules:
 
   - name: remove conflict label if not needed
     conditions:
+      - "#approved-reviews-by>=1"
       - -conflict
     actions:
       label:
