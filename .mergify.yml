@@ -2,9 +2,6 @@ queue_rules:
   - name: default
     conditions: ["files>=1"]
 
-  - name: coin-coin
-    conditions: []
-
 pull_request_rules:
   - name: Generic rule not in wip
     conditions:
@@ -12,15 +9,3 @@ pull_request_rules:
     actions:
       queue:
         name: default
-
-  - name: warn on conflicts
-    conditions:
-      - conflict
-    actions:
-      queue:
-        name: coin-coin
-      comment:
-        message: "@{{author}} this pull request is now in conflict 😩"
-      label:
-        add:
-          - conflict
