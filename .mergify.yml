@@ -1,6 +1,8 @@
 queue_rules:
   - name: default
-    conditions: []
+    conditions: [
+        "files>=1"
+        ]
 
 pull_request_rules:
   - name: automatic merge on approval when the title does not contain “WIP” (ignoring case)
