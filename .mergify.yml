@@ -1,8 +1,6 @@
 queue_rules:
   - name: default
-    conditions: [
-        "files>=1"
-        ]
+    conditions: ["files>=1"]
 
   - name: coin-coin
     conditions: []
