@@ -6,6 +6,7 @@ pull_request_rules:
   - name: Generic rule not in wip
     conditions:
       - -title~=(?i)wip
+      - "#approved-reviews-by>=1"
     actions:
       queue:
         name: default
