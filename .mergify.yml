@@ -39,11 +39,14 @@ pull_request_rules:
     conditions:
       - conflict
     actions:
+      queue:
+        name: coin-coin
       comment:
         message: "@{{author}} this pull request is now in conflict 😩"
       label:
         add:
           - conflict
+
   - name: remove conflict label if not needed
     conditions:
       - -conflict
