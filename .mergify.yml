@@ -4,6 +4,9 @@ queue_rules:
         "files>=1"
         ]
 
+  - name: coin-coin
+    conditions: []
+
 pull_request_rules:
   - name: automatic merge on approval when the title does not contain “WIP” (ignoring case)
     conditions:
